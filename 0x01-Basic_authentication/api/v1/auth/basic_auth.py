@@ -2,7 +2,7 @@
 """ Basic Auth """
 from api.v1.auth.auth import Auth
 from models.user import User
-from typing import TypeVar, Tuple
+from typing import Tuple, Optional
 import base64
 import binascii
 
@@ -51,7 +51,7 @@ class BasicAuth(Auth):
         return email, password
 
     def user_object_from_credentials(self, user_email: str, user_pwd:
-                                     str) -> TypeVar('User'):
+                                     str) -> Optional[User]:
         """
         Returns the User instance based on his email and password
         """
@@ -70,7 +70,7 @@ class BasicAuth(Auth):
 
         return user
 
-    def current_user(self, request=None) -> TypeVar('User'):
+    def current_user(self, request=None) -> Optional[User]:
         """
         Retrieves the User instance for a request using Basic Authentication
         """
