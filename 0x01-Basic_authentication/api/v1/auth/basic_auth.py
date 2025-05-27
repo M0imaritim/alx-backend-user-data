@@ -91,28 +91,3 @@ class BasicAuth(Auth):
             return None
 
         return self.user_object_from_credentials(email, pwd)
-
-    def require_auth(self, path: str, excluded_paths: list[str]) -> bool:
-        """Determine if authentication is required for the given path."""
-
-        if path is None or excluded_paths is None or not excluded_paths:
-            return True
-
-        if not path.endswith('/'):
-            path += '/'
-
-        for excluded in excluded_paths:
-            if excluded is None:
-                continue
-
-            if excluded.endswith('*'):
-                if path.startswith(excluded[:-1]):
-                    return False
-
-            if not excluded.endswith('/'):
-                excluded += '/'
-
-            if path == excluded:
-                return False
-
-        return True
