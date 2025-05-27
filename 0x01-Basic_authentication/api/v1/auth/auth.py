@@ -43,4 +43,3 @@ class Auth:
         """Return the current user based on the request.
         """
         return None
-        
