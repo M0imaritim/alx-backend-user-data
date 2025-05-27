@@ -17,7 +17,6 @@ auth = None
 auth_type = os.getenv('AUTH_TYPE')
 
 if auth_type == 'auth':
-    from api.v1.auth.auth import Auth
     auth = Auth()
 
 
@@ -28,8 +27,8 @@ def before_request_func():
     if auth is None:
         return
 
-    excluded_paths = ['/apiv1/status/', '/api/v1/unauthorized',
-                      'api/v1/forbidden/']
+    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
+                      '/api/v1/forbidden/']
     if not auth.require_auth(request.path, excluded_paths):
         return
 
