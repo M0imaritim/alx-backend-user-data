@@ -7,6 +7,8 @@ Auth module for handling authentication
 from flask import request
 from typing import List, TypeVar
 
+User = TypeVar('User')
+
 
 class Auth:
     """Auth class to manage API authentication
@@ -30,9 +32,15 @@ class Auth:
     def authorization_header(self, request=None) -> str:
         """Returns the value of the authorization header from the request
         """
-        return None
+        if request is None:
+            return None
 
-    def current_user(self, requset=None) -> TypeVar('user'):
+        auth_header = request.headers.get('Authorization')
+        if auth_header is None:
+            return None
+
+    def current_user(self, request=None) -> User:
         """Return the current user based on the request.
         """
         return None
+        
