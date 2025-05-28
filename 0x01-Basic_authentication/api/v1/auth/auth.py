@@ -28,7 +28,7 @@ class Auth:
         for excluded in excluded_paths:
             if excluded == path_with_slash:
                 return False
-            return True
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Returns the value of the authorization header from the request
