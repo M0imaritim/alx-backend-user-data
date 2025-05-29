@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+""" SessionExpAuth module
+"""
 from api.v1.auth.session_auth import SessionAuth
 from datetime import datetime, timedelta
 import os
