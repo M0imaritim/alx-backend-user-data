@@ -69,7 +69,6 @@ class BasicAuth(Auth):
         for u in user:
             if u.is_valid_password(user_pwd):
                 return u
-     
 
     def current_user(self, request=None) -> Optional[User]:
         """
