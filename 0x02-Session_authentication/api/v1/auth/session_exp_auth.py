@@ -4,6 +4,7 @@ import os
 
 
 class SessionExpAuth(SessionAuth):
+    """ Session Expiration Authentication class """
     def __init__(self):
         super().__init__()
         try:
