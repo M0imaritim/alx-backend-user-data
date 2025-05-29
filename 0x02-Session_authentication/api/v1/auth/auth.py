@@ -3,7 +3,7 @@
 Auth module for handling authentication
 """
 
-
+import os
 from flask import request
 from typing import List, TypeVar
 
