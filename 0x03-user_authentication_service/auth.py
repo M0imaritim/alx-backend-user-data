@@ -55,7 +55,7 @@ class Auth:
         """Validate user credentials."""
         try:
             user = self._db.find_user_by(email=email)
-            if user and bcrypt.checkpw(password.encode(),
+            if user and bcrypt.checkpw(password.encode('utf-8'),
                                        user.hashed_password):
                 return True
         except Exception:
@@ -71,3 +71,20 @@ class Auth:
             return session_id
         except Exception:
             return
+
+    def get_user_from_session_id(self, session_id: str) -> str:
+        """Return the user based on a session_id."""
+        if session_id is None:
+            return None
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except Exception:
+            return None
+
+    def destroy_session(self, user_id: int) -> None:
+        """Destroy a session by setting the user's session_id to None."""
+        try:
+            self._db.update_user(user_id, session_id=None)
+        except Exception:
+            pass
