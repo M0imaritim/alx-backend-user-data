@@ -2,7 +2,7 @@
 """Auth module for handling user authentication."""
 
 import bcrypt
-import uuid 
+import uuid
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
