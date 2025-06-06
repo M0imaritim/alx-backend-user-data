@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-DB module for managing the database connection and user operations.
-"""
+"""DB module for managing the database connection and user operations."""
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -16,23 +14,21 @@ VALID_FIELDS = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
 
 class DB:
     """
-    DB class for handling database operations such as adding, finding, and updating users.
+    DB class for handling database operations.
+
+    Such as: adding, finding, and updating users.
     """
 
     def __init__(self) -> None:
-        """
-        Initialize a new DB instance and create all tables.
-        """
-        self._engine = create_engine("sqlite:///a.db", echo=False)  # Set echo=True for debug
+        """Initialize a new DB instance and create all tables."""
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session: Optional[Session] = None
 
     @property
     def _session(self) -> Session:
-        """
-        Create and memoize a session object for interacting with the DB.
-        """
+        """Create and memoize a session object for interacting with the DB."""
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
