@@ -43,6 +43,9 @@ class DB:
             email (str): The user's email address.
             hashed_password (str): The user's hashed password.
         """
+        if not email or not hashed_password:
+            return
+
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
