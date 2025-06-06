@@ -2,6 +2,7 @@
 """Auth module for handling user authentication."""
 
 import bcrypt
+import uuid
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -17,6 +18,11 @@ def _hash_password(password: str) -> bytes:
         bytes: The salted hash of the password.
     """
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+
+def _generate_uuid(self) -> str:
+    """Generate a new UUID."""
+    return str(uuid.uuid4())
 
 
 class Auth:
@@ -44,3 +50,24 @@ class Auth:
         except NoResultFound:
             hashed_pw = _hash_password(password)
             return self._db.add_user(email, hashed_pw)
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """Validate user credentials."""
+        try:
+            user = self._db.find_user_by(email=email)
+            if user and bcrypt.checkpw(password.encode(),
+                                       user.hashed_password):
+                return True
+        except Exception:
+            pass
+        return False
+
+    def create_session(self, email: str) -> str:
+        """Create a session ID for a user."""
+        try:
+            user = self._db.find_user_by(email=email)
+            session_id = _generate_uuid()
+            self._db.update_user(user.id, session_id=session_id)
+            return session_id
+        except Exception:
+            return
